@@ -1,3 +1,4 @@
+import fs from "fs";
 import axios from "axios";
 import { randomGujaratiName } from "./names.js";
 
@@ -120,15 +121,28 @@ const suggest = [
 const yesno = ["Yes","No"];
 
 function random(arr){
-return arr[Math.floor(Math.random()*arr.length)];
+  return arr[Math.floor(Math.random()*arr.length)];
 }
 
 function randomName(){
-return randomGujaratiName();
+  return randomGujaratiName();
 }
 
 function sleep(ms){
-return new Promise(resolve=>setTimeout(resolve,ms));
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function getStartIndex(){
+  try{
+    const data = JSON.parse(fs.readFileSync("progress.json"));
+    return data.count + 1;
+  }catch{
+    return 1;
+  }
+}
+
+function saveProgress(i){
+  fs.writeFileSync("progress.json", JSON.stringify({ count: i }));
 }
 
 async function submitForm(i){
@@ -163,7 +177,6 @@ const data = new URLSearchParams({
 "entry.1157779439": random(yesno),
 "entry.1150937137": random(suggest),
 
-// sentinel fields
 "entry.1019516443_sentinel": "",
 "entry.1036191897_sentinel": "",
 "entry.2134539982_sentinel": "",
@@ -192,9 +205,9 @@ const data = new URLSearchParams({
 
 });
 
-console.log("payload",Object.fromEntries(data));
+console.log("payload", Object.fromEntries(data));
 
-const res = await axios.post(url,data,{
+const res = await axios.post(url, data, {
 headers:{
 "Content-Type":"application/x-www-form-urlencoded",
 "User-Agent":"Mozilla/5.0",
@@ -203,11 +216,11 @@ headers:{
 }
 });
 
-console.log("submitted",i,res.status);
+console.log("submitted", i, res.status);
 
 }catch(err){
 
-console.error("submission failed",i,err.response?.status,err.message);
+console.error("submission failed", i, err.response?.status, err.message);
 
 }
 
@@ -215,21 +228,25 @@ console.error("submission failed",i,err.response?.status,err.message);
 
 async function runBot(){
 
-for(let i=1;i<=200;i++){
+const start = getStartIndex();
+
+console.log("Starting from submission", start);
+
+for(let i = start; i <= 200; i++){
 
 await submitForm(i);
 
+saveProgress(i);
+
 const delay = (7*60*1000) + Math.random()*(8*60*1000);
 
-console.log("waiting",Math.round(delay/60000),"minutes");
+console.log("waiting", Math.round(delay/60000), "minutes");
 
 await sleep(delay);
 
 }
 
 console.log("All submissions completed");
-
-process.exit(0);
 
 }
 
