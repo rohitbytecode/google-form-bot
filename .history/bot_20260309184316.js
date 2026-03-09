@@ -4,8 +4,6 @@ import { faker } from "@faker-js/faker";
 const url =
 "https://docs.google.com/forms/d/e/1FAIpQLSeMBZiwJZ2ssJo4A0IhfJxTVmlCzQuDikYerys6ASuxJRh0gQ/formResponse";
 
-axios.defaults.timeout = 10000;
-
 const genders = ["Male", "Female"];
 
 const ages = [
@@ -111,35 +109,23 @@ const suggest = [
 
 const yesno = ["Yes","No"];
 
-
-
 function random(arr){
 return arr[Math.floor(Math.random()*arr.length)];
 }
 
-
-
 function randomName(){
-return faker.person.fullName();
+return faker.person.firstName();
 }
-
-
 
 function sleep(ms){
-return new Promise(resolve=>setTimeout(resolve,ms));
+return new Promise(r=>setTimeout(r,ms));
 }
-
-
 
 function randomFbzx(){
 return Math.floor(Math.random()*1e16).toString();
 }
 
-
-
 async function submitForm(i){
-
-try{
 
 const data = new URLSearchParams({
 
@@ -202,15 +188,7 @@ headers:{
 
 console.log("submitted",i,res.status);
 
-}catch(err){
-
-console.error("submission failed",i,err.message);
-
 }
-
-}
-
-
 
 async function runBot(){
 
@@ -220,18 +198,10 @@ await submitForm(i);
 
 const delay = (7*60*1000) + Math.random()*(8*60*1000);
 
-console.log("waiting",Math.round(delay/60000),"minutes");
-
 await sleep(delay);
 
 }
 
-console.log("All submissions completed");
-
-process.exit(0);
-
 }
-
-
 
 runBot();
