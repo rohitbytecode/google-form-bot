@@ -1,12 +1,16 @@
 import axios from "axios";
-import { randomGujaratiName } from "./names.js";
+import { faker } from "@faker-js/faker";
 
 const url =
 "https://docs.google.com/forms/d/e/1FAIpQLSeMBZiwJZ2ssJo4A0IhfJxTVmlCzQuDikYerys6ASuxJRh0gQ/formResponse";
 
 axios.defaults.timeout = 10000;
 
+
+
 const genders = ["Male","Female"];
+
+
 
 const ages = [
 "below 20",
@@ -15,7 +19,11 @@ const ages = [
 "40 Above"
 ];
 
+
+
 const invest = ["Yes","No"];
+
+
 
 const frequencies = [
 "Monthly",
@@ -24,11 +32,14 @@ const frequencies = [
 "Occasionally"
 ];
 
+
+
 const investmentPref = [
 "SIP",
-"Traditional Avenues",
-"Both"
+"Traditional Avenues"
 ];
+
+
 
 const objectives = [
 "Safety",
@@ -37,6 +48,8 @@ const objectives = [
 "Tax benefits"
 ];
 
+
+
 const monthlyinv = [
 "Below 1000",
 "1001 to 5000",
@@ -44,10 +57,14 @@ const monthlyinv = [
 "Above 10000"
 ];
 
+
+
 const longterm = [
 "SIP",
 "Traditional investment Avenues"
 ];
+
+
 
 const influence = [
 "Friends/family",
@@ -56,7 +73,9 @@ const influence = [
 "Advertisement"
 ];
 
-const agreement1 = [
+
+
+const agreement = [
 "Strongly Agree",
 "Agree",
 "Neutral",
@@ -64,13 +83,7 @@ const agreement1 = [
 "strongly disagree"
 ];
 
-const agreement2 = [
-"strongly Agree",
-"agree",
-"neutral",
-"disagree",
-"strongly disagree"
-];
+
 
 const discou = [
 "Low return",
@@ -79,12 +92,16 @@ const discou = [
 "complicated process"
 ];
 
+
+
 const knowledge = [
 "Market Risk",
 "lack of knowledge",
 "fear of loss",
 "no regular income"
 ];
+
+
 
 const trustmost = [
 "Fixed Deposit",
@@ -93,12 +110,16 @@ const trustmost = [
 "Insurance"
 ];
 
+
+
 const benefits = [
 "Regular investment habit",
 "Market growth benefits",
 "Affordable investment",
 "Diversification"
 ];
+
+
 
 const aven = [
 "Low Risk",
@@ -107,29 +128,43 @@ const aven = [
 "Easy to understand"
 ];
 
+
+
 const betterReturns = [
 "SIP",
-"Traditional Investments"
+"Traditional investment Avenues"
 ];
+
+
 
 const suggest = [
 "SIP",
 "Traditional Avenues"
 ];
 
+
+
 const yesno = ["Yes","No"];
+
+
 
 function random(arr){
 return arr[Math.floor(Math.random()*arr.length)];
 }
 
+
+
 function randomName(){
-return randomGujaratiName();
+return faker.person.fullName();
 }
+
+
 
 function sleep(ms){
 return new Promise(resolve=>setTimeout(resolve,ms));
 }
+
+
 
 async function submitForm(i){
 
@@ -138,66 +173,68 @@ try{
 const data = new URLSearchParams({
 
 "entry.2033724748": randomName(),
+
 "entry.1019516443": random(genders),
+
 "entry.1036191897": random(ages),
+
 "entry.2134539982": random(invest),
+
 "entry.77489121": random(frequencies),
+
 "entry.991211697": random(investmentPref),
+
 "entry.1103407532": random(objectives),
+
 "entry.1551052683": random(monthlyinv),
+
 "entry.560325964": random(longterm),
+
 "entry.1270231082": random(influence),
 
-"entry.1756930320": random(agreement1),
-"entry.1760644846": random(agreement2),
-"entry.1041228027": random(agreement2),
+"entry.1756930320": random(agreement),
+
+"entry.1760644846": random(agreement),
+
+"entry.1041228027": random(agreement),
 
 "entry.173523049": random(discou),
+
 "entry.2088098199": random(knowledge),
+
 "entry.539035399": random(trustmost),
+
 "entry.1832567573": random(yesno),
+
 "entry.1122714469": random(benefits),
+
 "entry.2128748929": random(aven),
+
 "entry.471538796": random(betterReturns),
+
 "entry.1886465197": random(yesno),
+
 "entry.1157779439": random(yesno),
+
 "entry.1150937137": random(suggest),
 
-// sentinel fields
-"entry.1019516443_sentinel": "",
-"entry.1036191897_sentinel": "",
-"entry.2134539982_sentinel": "",
-"entry.77489121_sentinel": "",
-"entry.991211697_sentinel": "",
-"entry.1103407532_sentinel": "",
-"entry.1551052683_sentinel": "",
-"entry.560325964_sentinel": "",
-"entry.1270231082_sentinel": "",
-"entry.1756930320_sentinel": "",
-"entry.1760644846_sentinel": "",
-"entry.1041228027_sentinel": "",
-"entry.173523049_sentinel": "",
-"entry.2088098199_sentinel": "",
-"entry.539035399_sentinel": "",
-"entry.1832567573_sentinel": "",
-"entry.1122714469_sentinel": "",
-"entry.2128748929_sentinel": "",
-"entry.471538796_sentinel": "",
-"entry.1886465197_sentinel": "",
-"entry.1157779439_sentinel": "",
-"entry.1150937137_sentinel": "",
-
 "fvv":"1",
-"pageHistory":"0"
+
+"pageHistory":"0",
+
+"fbzx":"6282478559705567925"
 
 });
 
-console.log("payload",Object.fromEntries(data));
+console.log(
+"payload",
+JSON.stringify(Object.fromEntries(data),null,2)
+);
 
 const res = await axios.post(url,data,{
 headers:{
 "Content-Type":"application/x-www-form-urlencoded",
-"User-Agent":"Mozilla/5.0",
+"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
 "Origin":"https://docs.google.com",
 "Referer":"https://docs.google.com/forms/d/e/1FAIpQLSeMBZiwJZ2ssJo4A0IhfJxTVmlCzQuDikYerys6ASuxJRh0gQ/viewform"
 }
@@ -207,24 +244,24 @@ console.log("submitted",i,res.status);
 
 }catch(err){
 
-console.error("submission failed",i,err.response?.status,err.message);
-
+console.error("submission failed",i);
+if(err.response){
+console.error("status:",err.response.status);
+console.error("data:",err.response.data);
+}else{
+console.error(err.message);
 }
-
+}
 }
 
 async function runBot(){
-
 for(let i=1;i<=200;i++){
 
 await submitForm(i);
 
 const delay = (7*60*1000) + Math.random()*(8*60*1000);
-
 console.log("waiting",Math.round(delay/60000),"minutes");
-
 await sleep(delay);
-
 }
 
 console.log("All submissions completed");

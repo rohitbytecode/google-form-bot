@@ -1,5 +1,9 @@
 import axios from "axios";
-import { randomGujaratiName } from "./names.js";
+import { Faker, en_IN,en, base } from "@faker-js/faker";
+
+const fakerIN = new Faker({ 
+    locale: [en_IN, en, base] 
+});
 
 const url =
 "https://docs.google.com/forms/d/e/1FAIpQLSeMBZiwJZ2ssJo4A0IhfJxTVmlCzQuDikYerys6ASuxJRh0gQ/formResponse";
@@ -124,7 +128,7 @@ return arr[Math.floor(Math.random()*arr.length)];
 }
 
 function randomName(){
-return randomGujaratiName();
+return fakerIN.person.fullName();
 }
 
 function sleep(ms){
@@ -138,54 +142,48 @@ try{
 const data = new URLSearchParams({
 
 "entry.2033724748": randomName(),
+
 "entry.1019516443": random(genders),
 "entry.1036191897": random(ages),
+
 "entry.2134539982": random(invest),
+
 "entry.77489121": random(frequencies),
+
 "entry.991211697": random(investmentPref),
+
 "entry.1103407532": random(objectives),
+
 "entry.1551052683": random(monthlyinv),
+
 "entry.560325964": random(longterm),
+
 "entry.1270231082": random(influence),
 
-"entry.1756930320": random(agreement1),
-"entry.1760644846": random(agreement2),
-"entry.1041228027": random(agreement2),
+"entry.1756930320": random(agreement),
+"entry.1760644846": random(agreement),
+
+"entry.1041228027": random(agreement),
 
 "entry.173523049": random(discou),
-"entry.2088098199": random(knowledge),
-"entry.539035399": random(trustmost),
-"entry.1832567573": random(yesno),
-"entry.1122714469": random(benefits),
-"entry.2128748929": random(aven),
-"entry.471538796": random(betterReturns),
-"entry.1886465197": random(yesno),
-"entry.1157779439": random(yesno),
-"entry.1150937137": random(suggest),
 
-// sentinel fields
-"entry.1019516443_sentinel": "",
-"entry.1036191897_sentinel": "",
-"entry.2134539982_sentinel": "",
-"entry.77489121_sentinel": "",
-"entry.991211697_sentinel": "",
-"entry.1103407532_sentinel": "",
-"entry.1551052683_sentinel": "",
-"entry.560325964_sentinel": "",
-"entry.1270231082_sentinel": "",
-"entry.1756930320_sentinel": "",
-"entry.1760644846_sentinel": "",
-"entry.1041228027_sentinel": "",
-"entry.173523049_sentinel": "",
-"entry.2088098199_sentinel": "",
-"entry.539035399_sentinel": "",
-"entry.1832567573_sentinel": "",
-"entry.1122714469_sentinel": "",
-"entry.2128748929_sentinel": "",
-"entry.471538796_sentinel": "",
-"entry.1886465197_sentinel": "",
-"entry.1157779439_sentinel": "",
-"entry.1150937137_sentinel": "",
+"entry.2088098199": random(knowledge),
+
+"entry.539035399": random(trustmost),
+
+"entry.1832567573": random(yesno),
+
+"entry.1122714469": random(benefits),
+
+"entry.2128748929": random(aven),
+
+"entry.471538796": random(betterReturns),
+
+"entry.1886465197": random(yesno),
+
+"entry.1157779439": random(yesno),
+
+"entry.1150937137": random(suggest),
 
 "fvv":"1",
 "pageHistory":"0"
